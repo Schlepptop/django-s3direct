@@ -41,8 +41,19 @@ const parseJson = json => {
 };
 
 const updateProgressBar = (element, progressRatio) => {
-  const bar = element.querySelector('.bar');
-  bar.style.width = Math.round(progressRatio * 100) + '%';
+   const progress = Math.round(progressRatio * 100);
+
+  let use = element.querySelector('use');
+  let gradient = use.getAttribute("data-gradient")
+  let mod = document.querySelector("#"+gradient)
+  let left = mod.querySelector(".left-stop")
+  let right = mod.querySelector(".right-stop")
+  left.setAttribute("offset", Math.min(0, progress-3)+"%")
+  right.setAttribute("offset", Math.max(progress+3)+"%")
+
+  if (progress == 100) {
+      element.querySelector('use').setAttribute("href", "#upload-done");
+  }
 };
 
 const error = (el, msg) => {
@@ -78,7 +89,6 @@ const finishUpload = (element, endpoint, bucket, objectKey) => {
     .split('/')
     .pop();
   element.className = 's3direct link-active';
-  element.querySelector('.bar').style.width = '0%';
   disableSubmit(false);
 };
 

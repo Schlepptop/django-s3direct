@@ -43,7 +43,6 @@ const parseJson = json => {
 const updateProgressBar = (element, progressRatio) => {
   let label = element.querySelector('label')
   let use = label.querySelector('use');
-  console.log(element)
   let gradient = use.getAttribute("data-gradient")
   let mod = document.querySelector("#"+gradient)
   let left = mod.querySelector(".left-stop")
@@ -51,14 +50,13 @@ const updateProgressBar = (element, progressRatio) => {
   left.setAttribute("offset", progressRatio)
   right.setAttribute("offset", Math.min(1, progressRatio+0.001))
 
-  if (progressRatio === 1) {
-      element.querySelector('use').setAttribute("href", "#upload-done");
-  }
 };
 
 const error = (el, msg) => {
   el.className = 's3direct form-active';
   el.querySelector('.file-input').value = '';
+  el.querySelector('use').setAttribute("href", "#upload-none");
+
   alert(msg);
 };
 
@@ -90,6 +88,8 @@ const finishUpload = (element, endpoint, bucket, objectKey) => {
     .pop();
   element.className = 's3direct link-active';
   disableSubmit(false);
+  element.querySelector('use').setAttribute("href", "#upload-done");
+
 };
 
 const computeMd5 = data => {

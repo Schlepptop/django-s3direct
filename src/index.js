@@ -41,15 +41,15 @@ const parseJson = json => {
 };
 
 const updateProgressBar = (element, progressRatio) => {
-   const progress = Math.round(progressRatio * 100);
-
-  let use = element.querySelector('use');
+  let label = element.querySelector('label')
+  let use = label.querySelector('use');
+  console.log(element)
   let gradient = use.getAttribute("data-gradient")
   let mod = document.querySelector("#"+gradient)
   let left = mod.querySelector(".left-stop")
   let right = mod.querySelector(".right-stop")
-  left.setAttribute("offset", Math.min(0, progress-3)+"%")
-  right.setAttribute("offset", Math.max(progress+3)+"%")
+  left.setAttribute("offset", progressRatio)
+  right.setAttribute("offset", Math.min(1, progressRatio+0.001))
 
   if (progress == 100) {
       element.querySelector('use').setAttribute("href", "#upload-done");

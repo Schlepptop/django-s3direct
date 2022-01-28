@@ -51,7 +51,7 @@ const updateProgressBar = (element, progressRatio) => {
   left.setAttribute("offset", progressRatio)
   right.setAttribute("offset", Math.min(1, progressRatio+0.001))
 
-  if (progress == 100) {
+  if (progressRatio === 1) {
       element.querySelector('use').setAttribute("href", "#upload-done");
   }
 };
